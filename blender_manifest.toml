@@ -1,0 +1,12 @@
+schema_version = "1.0.0"
+
+blender_version_min = "4.2.0"
+id = "printing_helper"
+license = ["SPDX:GPL-3.0-or-later", ]
+maintainer = "小萌新"
+name = "Printing Helper"
+tagline = "Printing Helper"
+type = "add-on"
+version = "0.1.0"
+tags = ["3D View", "Render"]
+
