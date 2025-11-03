@@ -1,6 +1,6 @@
 schema_version = "1.0.0"
 
-blender_version_min = "4.2.0"
+blender_version_min = "4.5.0"
 id = "printing_helper"
 license = ["SPDX:GPL-3.0-or-later", ]
 maintainer = "小萌新"
