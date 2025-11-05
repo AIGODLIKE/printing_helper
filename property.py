@@ -1,5 +1,6 @@
 import bpy
 import numpy as np
+from decimal import Decimal
 
 
 def get_physical(value: float) -> float:
@@ -9,18 +10,21 @@ def get_physical(value: float) -> float:
     M 3dpi 1.0
     """
     render = bpy.context.scene.render
-    ppm_base = render.ppm_base
-    ppm_factor = render.ppm_factor
-    w = np.divide(0.0254, ppm_base)
+    ppm_base = Decimal(render.ppm_base)
+    ppm_factor = Decimal(render.ppm_factor)
+    w = np.divide(Decimal(0.0254), ppm_base)
     t = np.multiply(np.divide(value, ppm_factor), w)  # cm 2.54
-    return round(t, 2)
+    return round(t, 3)
 
 
 def set_physical(value: float, key: str):
     render = bpy.context.scene.render
     ppm_base = render.ppm_base
     ppm_factor = render.ppm_factor
-    # setattr(render, key, int((value / ppm_base) * ppm_factor))
+    w = np.divide(0.0254, ppm_base)
+    t = np.multiply(np.divide(value, w), ppm_factor)  # cm 2.54
+    nw = round(t, 3)
+    setattr(render, key, int(nw))
 
 
 class PrintingHelperProperties(bpy.types.PropertyGroup):

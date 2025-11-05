@@ -63,6 +63,7 @@ class PRINTINGHELPER_PT_panel(bpy.types.Panel):
 
         x = render.resolution_x / total_ppm
         y = render.resolution_y / total_ppm
+        layout.label(text=f"w:{np.divide(0.0254, ppm_base)}")
         layout.label(text=f"s:{np.multiply(254, ppm_base)}")
         layout.label(text=f"total_ppm:{total_ppm}")
         layout.label(text=f"Resolution:{x} {y}")
