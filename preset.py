@@ -31,7 +31,9 @@ class AddPresetPrinting(AddPresetBase, bpy.types.Operator):
 
 def register():
     bpy.utils.register_class(RENDER_PT_printing_helper_presets)
+    bpy.utils.register_class(AddPresetPrinting)
 
 
 def unregister():
     bpy.utils.unregister_class(RENDER_PT_printing_helper_presets)
+    bpy.utils.unregister_class(AddPresetPrinting)

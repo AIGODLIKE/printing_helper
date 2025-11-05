@@ -1,6 +1,6 @@
 import bpy
 
-modules = ["property", "panel", "preset"]
+modules = ["property", "panel", "preset", "translate"]
 
 reg, un_reg = bpy.utils.register_submodule_factory(__package__, modules)
 
