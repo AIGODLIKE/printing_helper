@@ -6,4 +6,5 @@ data = {
     "Height(CM)": "高度(CM)",
     "Fixed DPI": "固定DPI",
     "Fixed Size": "固定大小",
+    "Resolution Sync Mode": "分辨率同步模式"
 }

@@ -45,8 +45,6 @@ class PRINTINGHELPER_PT_panel(bpy.types.Panel):
             column.prop(render, "ppm_factor", text="DPI")
             column.prop(ph, "physical_x")
             column.prop(ph, "physical_y")
-            from .update import __is_updatable__
-            column.label(text=str(__is_updatable__))
         return
 
         self.draw_dpi(column, context)

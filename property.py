@@ -54,6 +54,7 @@ class PrintingHelperProperties(bpy.types.PropertyGroup):
         **args
     )
     mode: bpy.props.EnumProperty(
+        name="Resolution Sync Mode",
         items=[
             ("FIXED_DPI", "Fixed DPI", ""),
             ("FIXED_SIZE", "Fixed Size", ""),
