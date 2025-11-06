@@ -19,7 +19,6 @@ def update_lock(func, ):
             finally:
                 __is_updatable__ = True
         return None
-
     return wap
 
 
