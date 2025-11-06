@@ -1,5 +1,7 @@
 import bpy
 
+from .ops import SwitchXY
+
 
 class PRINTINGHELPER_PT_panel(bpy.types.Panel):
     bl_label = "Pringing Helper"
@@ -11,7 +13,9 @@ class PRINTINGHELPER_PT_panel(bpy.types.Panel):
 
     def draw_header_preset(self, _context):
         from .preset import RENDER_PT_printing_helper_presets
-        RENDER_PT_printing_helper_presets.draw_panel_header(self.layout)
+        row = self.layout.row(align=True)
+        row.operator(SwitchXY.bl_idname, text="", icon="UV_SYNC_SELECT")
+        RENDER_PT_printing_helper_presets.draw_panel_header(row)
 
     def draw(self, context):
         from bpy.types import RENDER_PT_output_pixel_density
@@ -39,8 +43,10 @@ class PRINTINGHELPER_PT_panel(bpy.types.Panel):
         else:
             column.row(align=True).prop(ph, "mode", expand=True)
             column.prop(render, "ppm_factor", text="DPI")
-            column.prop(ph, "physical_width")
-            column.prop(ph, "physical_height")
+            column.prop(ph, "physical_x")
+            column.prop(ph, "physical_y")
+            from .update import __is_updatable__
+            column.label(text=str(__is_updatable__))
         return
 
         self.draw_dpi(column, context)

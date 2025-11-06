@@ -1,61 +1,60 @@
-from decimal import Decimal
-
 import bpy
-import numpy as np
+
+from .update import update_lock
+from .utils import cm_to_pixels_decimal
 
 
-def get_physical(value: float) -> float:
-    """
-    CM 254dpi 0.01
-    英寸 100dpi 0.0254
-    M 3dpi 1.0
-    """
-    render = bpy.context.scene.render
-    ppm_base = Decimal(render.ppm_base)
-    ppm_factor = Decimal(render.ppm_factor)
-    # w = round(np.divide(Decimal(0.0254), ppm_base), 3)
-    # t = np.multiply(np.divide(value, ppm_factor), w)  # cm 2.54
-    # t = np.multiply(np.divide(value, ppm_factor), Decimal(2.54))  # cm 2.54
-    # return round(t, 1)
-    # w = Decimal(.0254) / ppm_base
-    t = Decimal(value) / ppm_factor * Decimal(2.54)  # cm 2.54
-    return round(t, 1)
+@update_lock
+def update_physical(direction="x"):
+    print("update_physical", direction)
+    scene = bpy.context.scene
+    ph = scene.printing_helper
+    render = scene.render
 
+    rk = f"resolution_{direction.lower()}"
+    pk = f"physical_{direction.lower()}"
 
-def set_physical(value: float, key: str):
-    render = bpy.context.scene.render
-    ppm_base = render.ppm_base
-    ppm_factor = render.ppm_factor
-    w = np.divide(0.0254, ppm_base)
-    t = np.multiply(np.divide(value, w), ppm_factor)  # cm 2.54
-    nw = round(t)
-    setattr(render, key, int(nw))
+    new_pixels = int(cm_to_pixels_decimal(getattr(ph, pk), render.ppm_factor))
+    setattr(render, rk, new_pixels)
 
 
 class PrintingHelperProperties(bpy.types.PropertyGroup):
     """插件属性组"""
     args = {
-        "min": 0.1,
+        "min": 0.001,
         "precision": 2,
         "step": 0.1,
         "soft_max": 100000.0,
+        "default": 10,
     }
+
+    def update_x(self, context):
+        print("update_physica_x")
+        update_physical("x")
+
+    def update_y(self, context):
+        print("update_physica_y")
+        update_physical("y")
+
     # 物理尺寸输入
-    physical_width: bpy.props.FloatProperty(
+    physical_x: bpy.props.FloatProperty(
         name="Width(CM)",
         description="Physical Width",
+        update=update_x,
         **args
     )
-    physical_height: bpy.props.FloatProperty(
+    physical_y: bpy.props.FloatProperty(
         name="Height(CM)",
         description="Physical Height",
+        update=update_y,
         **args
     )
     mode: bpy.props.EnumProperty(
         items=[
             ("FIXED_DPI", "Fixed DPI", ""),
             ("FIXED_SIZE", "Fixed Size", ""),
-        ]
+        ],
+        default="FIXED_SIZE",
     )
 
     @property

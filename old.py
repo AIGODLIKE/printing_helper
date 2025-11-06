@@ -20,7 +20,7 @@ class PrintingHelperProperties(PropertyGroup):
     )
 
     # 物理尺寸输入
-    physical_width: FloatProperty(
+    physical_x: FloatProperty(
         name="宽度",
         description="物理宽度",
         default=10.0,
@@ -28,7 +28,7 @@ class PrintingHelperProperties(PropertyGroup):
         soft_max=1000.0
     )
 
-    physical_height: FloatProperty(
+    physical_y: FloatProperty(
         name="高度",
         description="物理高度",
         default=15.0,
@@ -94,15 +94,15 @@ class PRINTINGHELPER_OT_calculate(Operator):
             # 物理尺寸 → 像素
             if props.physical_unit == 'CM':
                 # 厘米转英寸再乘DPI
-                width_inch = props.physical_width / 2.54
-                height_inch = props.physical_height / 2.54
+                width_inch = props.physical_x / 2.54
+                height_inch = props.physical_y / 2.54
             elif props.physical_unit == 'M':
                 # 米转英寸再乘DPI
-                width_inch = props.physical_width * 100 / 2.54
-                height_inch = props.physical_height * 100 / 2.54
+                width_inch = props.physical_x * 100 / 2.54
+                height_inch = props.physical_y * 100 / 2.54
             else:  # 英寸
-                width_inch = props.physical_width
-                height_inch = props.physical_height
+                width_inch = props.physical_x
+                height_inch = props.physical_y
 
             props.pixel_width = int(width_inch * props.dpi_value)
             props.pixel_height = int(height_inch * props.dpi_value)
@@ -113,14 +113,14 @@ class PRINTINGHELPER_OT_calculate(Operator):
             height_inch = props.pixel_height / props.dpi_value
 
             if props.physical_unit == 'CM':
-                props.physical_width = width_inch * 2.54
-                props.physical_height = height_inch * 2.54
+                props.physical_x = width_inch * 2.54
+                props.physical_y = height_inch * 2.54
             elif props.physical_unit == 'M':
-                props.physical_width = (width_inch * 2.54) / 100
-                props.physical_height = (height_inch * 2.54) / 100
+                props.physical_x = (width_inch * 2.54) / 100
+                props.physical_y = (height_inch * 2.54) / 100
             else:  # 英寸
-                props.physical_width = width_inch
-                props.physical_height = height_inch
+                props.physical_x = width_inch
+                props.physical_y = height_inch
 
         self.report({'INFO'}, "计算完成!")
         return {'FINISHED'}
@@ -154,8 +154,8 @@ class PRINTINGHELPER_OT_create_grid(Operator):
             scale_factor = 0.0254  # 1英寸=0.0254米
 
         # 应用物理尺寸
-        plane.scale.x = props.physical_width * scale_factor
-        plane.scale.y = props.physical_height * scale_factor
+        plane.scale.x = props.physical_x * scale_factor
+        plane.scale.y = props.physical_y * scale_factor
 
         # 应用缩放变换
         bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
@@ -195,8 +195,8 @@ class PRINTINGHELPER_PT_main_panel(Panel):
             row.prop(props, "physical_unit", expand=True)
 
             col = box.column(align=True)
-            col.prop(props, "physical_width")
-            col.prop(props, "physical_height")
+            col.prop(props, "physical_x")
+            col.prop(props, "physical_y")
 
             # 计算结果
             box = layout.box()
@@ -220,8 +220,8 @@ class PRINTINGHELPER_PT_main_panel(Panel):
             row.prop(props, "physical_unit", expand=True)
 
             col = box.column(align=True)
-            col.label(text=f"宽度: {props.physical_width:.2f} {self.get_unit_text(props.physical_unit)}")
-            col.label(text=f"高度: {props.physical_height:.2f} {self.get_unit_text(props.physical_unit)}")
+            col.label(text=f"宽度: {props.physical_x:.2f} {self.get_unit_text(props.physical_unit)}")
+            col.label(text=f"高度: {props.physical_y:.2f} {self.get_unit_text(props.physical_unit)}")
 
         # 操作按钮
         box = layout.box()

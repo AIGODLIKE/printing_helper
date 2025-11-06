@@ -66,4 +66,4 @@ def cm_to_pixels_decimal(cm, dpi):
     inches = cm_dec / inch_per_cm
     pixels = inches * dpi_dec
 
-    return pixels.quantize(Decimal('1'), rounding=ROUND_HALF_UP)
+    return pixels.quantize(Decimal('1'), rounding=ROUND_HALF_UP).to_integral_value()
