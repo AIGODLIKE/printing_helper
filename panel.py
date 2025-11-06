@@ -1,6 +1,13 @@
 import bpy
 
-from .ops import SwitchXY
+from .ops import SwitchXY, Preset
+
+
+# NOTE: `as_float_32` is needed because Blender stores this value as a 32bit float.
+# Which won't match Python's 64bit float.
+def as_float_32(f):
+    from struct import pack, unpack
+    return unpack("f", pack("f", f))[0]
 
 
 class PRINTINGHELPER_PT_panel(bpy.types.Panel):
@@ -11,14 +18,15 @@ class PRINTINGHELPER_PT_panel(bpy.types.Panel):
 
     bl_parent_id = "RENDER_PT_format"
 
-    def draw_header_preset(self, _context):
-        from .preset import RENDER_PT_printing_helper_presets
+    def draw_header_preset(self, context):
         row = self.layout.row(align=True)
         row.operator(SwitchXY.bl_idname, text="", icon="UV_SYNC_SELECT")
-        RENDER_PT_printing_helper_presets.draw_panel_header(row)
+        row.operator_menu_enum(Preset.bl_idname, text=Preset.get_text(context), property="preset")
+        # RENDER_PT_printing_helper_presets.draw_panel_header(row)
 
     def draw(self, context):
         from bpy.types import RENDER_PT_output_pixel_density
+        from .ops import PresetPPMValue
 
         scene = context.scene
         ph = scene.printing_helper
@@ -29,10 +37,6 @@ class PRINTINGHELPER_PT_panel(bpy.types.Panel):
         layout.use_property_decorate = False
         column = layout.column(align=True)
 
-        def as_float_32(f):
-            from struct import pack, unpack
-            return unpack("f", pack("f", f))[0]
-
         if render.ppm_base != as_float_32(0.0254):  # 不是英尺dpi单位
             ops = column.operator("wm.context_set_float", text="Reset as Inch")
             ops.data_path = "scene.render.ppm_base"
@@ -41,24 +45,22 @@ class PRINTINGHELPER_PT_panel(bpy.types.Panel):
             col.label(text="PPM 基数未设置为英寸单位,输出DPI参数将与实际参数不一至!")
             col.label(text="需重置为英寸单位")
         else:
-            column.row(align=True).prop(ph, "mode", expand=True)
-            column.prop(render, "ppm_factor", text="DPI")
             column.prop(ph, "physical_x")
             column.prop(ph, "physical_y")
-        return
 
-        self.draw_dpi(column, context)
-        self.draw_pixeldensity(column, render)
+            column.separator()
+            column.prop(render, "ppm_factor", text="DPI")
 
-        # NOTE: `as_float_32` is needed because Blender stores this value as a 32bit float.
-        # Which won't match Python's 64bit float.
+            sp = column.split(factor=0.4, align=True)
+            sp.alignment = "RIGHT"
+            sp.label(text="Preset")
+            row = sp.row(align=True)
+            for i in (72, 100, 300):
+                ops = row.operator(PresetPPMValue.bl_idname, text=str(i))
+                ops.value = i
 
-        column.separator()
-        text = bpy.app.translations.pgettext_iface(unit_name)
-        th = bpy.app.translations.pgettext_iface("Physical Height")
-        tw = bpy.app.translations.pgettext_iface("Physical Width")
-
-        column.prop(render, "ppm_base", text="Base")
+            column.separator()
+            column.row(align=True).prop(ph, "mode", expand=True)
 
 
 def register():

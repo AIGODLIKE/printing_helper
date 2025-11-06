@@ -6,5 +6,16 @@ data = {
     "Height(CM)": "高度(CM)",
     "Fixed DPI": "固定DPI",
     "Fixed Size": "固定大小",
-    "Resolution Sync Mode": "分辨率同步模式"
+    "Resolution Sync Mode": "分辨率同步模式",
+    "A Series": "A系列",
+    "B Series": "B系列",
+    "C Series": "C系列",
+    "North American Standard": "北美标准",
+    "ANSI Standard": "ANSI标准",
+    "Architectural Standard": "建筑标准",
+    "Letter (21.6x27.9 cm)": "信纸 (21.6x27.9 cm)",
+    "Legal (21.6x35.6 cm)": "法律文件 (21.6x35.6 cm)",
+    "Legal junior (20.3x12.7 cm)": "小号法律文件 (20.3x12.7 cm)",
+    "Ledger (43.2x27.9 cm)": "账单 (43.2x27.9 cm)",
+    "Tabloid (27.9x43.2 cm)": "小报纸 (27.9x43.2 cm)",
 }

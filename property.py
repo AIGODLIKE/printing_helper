@@ -29,7 +29,6 @@ class PrintingHelperProperties(bpy.types.PropertyGroup):
         "precision": 2,
         "step": 0.1,
         "soft_max": 100000.0,
-        "default": 10,
     }
 
     def update_x(self, context):
@@ -45,19 +44,22 @@ class PrintingHelperProperties(bpy.types.PropertyGroup):
         name="Width(CM)",
         description="Physical Width",
         update=update_x,
+        default=29.1,
         **args
     )
     physical_y: bpy.props.FloatProperty(
         name="Height(CM)",
         description="Physical Height",
         update=update_y,
+        default=21,
         **args
     )
     mode: bpy.props.EnumProperty(
         name="Resolution Sync Mode",
+        description="修改输出分辨率时如何处理DPI及物理像素",
         items=[
-            ("FIXED_DPI", "Fixed DPI", ""),
-            ("FIXED_SIZE", "Fixed Size", ""),
+            ("FIXED_DPI", "Fixed DPI", "固定DPI不变,修改物理尺寸"),
+            ("FIXED_SIZE", "Fixed Size", "固定物理尺寸不变,修改DPI"),
         ],
         default="FIXED_SIZE",
     )
