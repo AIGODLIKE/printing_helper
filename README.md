@@ -7,3 +7,6 @@
 
 bpy.data.scenes["Scene"].render.ppm_base
 Blender ppm 的固定单位是米M
+
+
+CM 默认单位

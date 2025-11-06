@@ -1,6 +1,7 @@
+from decimal import Decimal
+
 import bpy
 import numpy as np
-from decimal import Decimal
 
 
 def get_physical(value: float) -> float:
@@ -12,9 +13,13 @@ def get_physical(value: float) -> float:
     render = bpy.context.scene.render
     ppm_base = Decimal(render.ppm_base)
     ppm_factor = Decimal(render.ppm_factor)
-    w = np.divide(Decimal(0.0254), ppm_base)
-    t = np.multiply(np.divide(value, ppm_factor), w)  # cm 2.54
-    return round(t, 3)
+    # w = round(np.divide(Decimal(0.0254), ppm_base), 3)
+    # t = np.multiply(np.divide(value, ppm_factor), w)  # cm 2.54
+    # t = np.multiply(np.divide(value, ppm_factor), Decimal(2.54))  # cm 2.54
+    # return round(t, 1)
+    # w = Decimal(.0254) / ppm_base
+    t = Decimal(value) / ppm_factor * Decimal(2.54)  # cm 2.54
+    return round(t, 1)
 
 
 def set_physical(value: float, key: str):
@@ -23,31 +28,43 @@ def set_physical(value: float, key: str):
     ppm_factor = render.ppm_factor
     w = np.divide(0.0254, ppm_base)
     t = np.multiply(np.divide(value, w), ppm_factor)  # cm 2.54
-    nw = round(t, 3)
+    nw = round(t)
     setattr(render, key, int(nw))
 
 
 class PrintingHelperProperties(bpy.types.PropertyGroup):
     """插件属性组"""
+    args = {
+        "min": 0.1,
+        "precision": 2,
+        "step": 0.1,
+        "soft_max": 100000.0,
+    }
     # 物理尺寸输入
     physical_width: bpy.props.FloatProperty(
-        name="Width",
+        name="Width(CM)",
         description="Physical Width",
-        default=10.0,
-        min=0.001,
-        soft_max=1000.0,
-        get=lambda self: get_physical(bpy.context.scene.render.resolution_x),
-        set=lambda self, value: set_physical(value, "resolution_x"),
+        **args
     )
     physical_height: bpy.props.FloatProperty(
-        name="Height",
+        name="Height(CM)",
         description="Physical Height",
-        default=15.0,
-        min=0.001,
-        soft_max=1000.0,
-        get=lambda self: get_physical(bpy.context.scene.render.resolution_y),
-        set=lambda self, value: set_physical(value, "resolution_y"),
+        **args
     )
+    mode: bpy.props.EnumProperty(
+        items=[
+            ("FIXED_DPI", "Fixed DPI", ""),
+            ("FIXED_SIZE", "Fixed Size", ""),
+        ]
+    )
+
+    @property
+    def is_fixed_dpi(self) -> bool:
+        return self.mode == "FIXED_DPI"
+
+    @property
+    def is_fixed_size(self) -> bool:
+        return self.mode == "FIXED_SIZE"
 
     preset: bpy.props.EnumProperty(
         items=(
