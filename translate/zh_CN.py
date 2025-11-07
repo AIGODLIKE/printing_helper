@@ -30,4 +30,5 @@ data = {
     "Out DPI": "输出DPI",
     "Width (CM)": "宽度 (CM)",
     "Height (CM)": "高度 (CM)",
+    "Ctrl: Enter dimensions manually": "Ctrl: 手动输入尺寸",
 }

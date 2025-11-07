@@ -33,7 +33,7 @@ class PresetPPMValue(bpy.types.Operator):
 class CreatePanel(bpy.types.Operator):
     bl_idname = "printing_helper.create_panel"
     bl_label = "Create Panel"
-    bl_description = "Create Panel"
+    bl_description = "Ctrl: Enter dimensions manually"
 
     width: bpy.props.FloatProperty(name="Width (CM)", default=21.0)
     height: bpy.props.FloatProperty(name="Height (CM)", default=29.7)
