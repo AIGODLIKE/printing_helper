@@ -7,6 +7,6 @@ maintainer = "ACGGIT Community(小萌新)"
 name = "Printing Helper"
 tagline = "Set the resolution required for printing more simply"
 type = "add-on"
-version = "0.1.0"
+version = "0.1.1"
 tags = ["Render"]
 

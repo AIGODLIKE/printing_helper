@@ -4,7 +4,7 @@ bl_info = {
     "name": "Printing Helper",
     "description": "Set the resolution required for printing more simply",
     "author": "ACGGIT Community(小萌新)",
-    "version": (0, 1, 0),
+    "version": (0, 1, 1),
     "blender": (4, 5, 0),
     "location": "",
     "support": "COMMUNITY",
