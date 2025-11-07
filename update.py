@@ -62,11 +62,9 @@ def update_resolution(direction="x", fixed_dpi=None, fixed_size=None):
     if ph.is_fixed_dpi or fixed_dpi:  # 固定DPI,设置物理尺寸
         new_cm = pixels_to_cm_decimal(value, render.ppm_factor)
         setattr(ph, pk, new_cm)
-        print("pixels_to_cm_decimal", new_cm, direction)
     elif ph.is_fixed_size or fixed_size:  # 固定物理尺寸,设置DPI
         new_dpi = calculate_dpi_decimal(value, getattr(ph, pk))
         render.ppm_factor = new_dpi
-        print("calculate_dpi_decimal", new_dpi, direction)
 
 
 def update_resolution_x():
@@ -74,7 +72,6 @@ def update_resolution_x():
     if "update_resolution_x" in last_update_lock:
         last_update_lock.remove("update_resolution_x")
     elif __is_updatable__:
-        print("update_resolution_x")
         update_resolution("x")
 
 
@@ -83,7 +80,6 @@ def update_resolution_y():
     if "update_resolution_y" in last_update_lock:
         last_update_lock.remove("update_resolution_y")
     elif __is_updatable__:
-        print("update_resolution_y")
         update_resolution("y")
 
 
