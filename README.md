@@ -2,6 +2,9 @@
 
 > **Set print-ready render resolution with one click - no complex math required!**
 
+<img width="389" height="432" alt="image" src="https://github.com/user-attachments/assets/4f42fb06-cec1-454c-8be9-9b518efc1d9f" />
+
+
 ## 🎯 Addon Overview
 
 Printing Helper is a revolutionary Blender add-on designed for users who need precise physical dimension outputs. Whether you're preparing print materials, creating physical models, or producing accurate engineering visualizations, this addon makes resolution setup incredibly simple.
