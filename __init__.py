@@ -8,7 +8,7 @@ bl_info = {
     "blender": (4, 5, 0),
     "location": "",
     "support": "COMMUNITY",
-    "category": "3D View",
+    "category": "Render",
 }
 
 ADDON_VERSION = ".".join([str(v) for v in bl_info["version"]])

@@ -1,5 +1,8 @@
 from decimal import Decimal, ROUND_HALF_UP
 
+import bmesh
+import bpy
+
 
 def calculate_dpi_decimal(pixels, cm):
     """
@@ -64,3 +67,45 @@ def cm_to_pixels_decimal(cm, dpi):
     pixels = inches * dpi_dec
 
     return pixels.quantize(Decimal('1'), rounding=ROUND_HALF_UP).to_integral_value()
+
+
+def create_plane_by_bmesh(width_cm=15, height_cm=10, name="Rectangle_Plane"):
+    """
+    使用BMesh创建矩形面片（可指定宽度和高度）
+
+    参数:
+        width_cm: 宽度（厘米）
+        height_cm: 高度（厘米）
+        name: 对象名称
+    """
+    # 单位转换
+    width_m = width_cm / 100
+    height_m = height_cm / 100
+
+    # 创建BMesh实例
+    bm = bmesh.new()
+
+    # 添加平面几何体
+    bmesh.ops.create_grid(
+        bm,
+        x_segments=1,
+        y_segments=1,
+        size=0.5  # 初始大小，后面会缩放
+    )
+
+    # 缩放至指定尺寸
+    bmesh.ops.scale(
+        bm,
+        vec=(width_m, height_m, 1),
+        verts=bm.verts
+    )
+
+    # 创建网格和对象
+    mesh = bpy.data.meshes.new(name + "_Mesh")
+    bm.to_mesh(mesh)
+    bm.free()
+
+    obj = bpy.data.objects.new(name, mesh)
+    bpy.context.collection.objects.link(obj)
+    print(f"创建了 {width_cm}cm × {height_cm}cm 的矩形面片")
+    return obj

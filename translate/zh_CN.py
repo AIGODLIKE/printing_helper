@@ -27,4 +27,7 @@ data = {
     "Printing Helper": "打印助手",
     "Set the resolution required for printing more simply": "更轻松地设置打印所需的分辨率",
     "Set the resolution required for printing more simply.": "更轻松地设置打印所需的分辨率.",
+    "Out DPI": "输出DPI",
+    "Width (CM)": "宽度 (CM)",
+    "Height (CM)": "高度 (CM)",
 }

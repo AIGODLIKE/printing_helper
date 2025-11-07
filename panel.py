@@ -19,7 +19,11 @@ class PRINTINGHELPER_PT_panel(bpy.types.Panel):
     bl_parent_id = "RENDER_PT_format"
 
     def draw_header_preset(self, context):
+        from .ops import CreatePanel
+
         row = self.layout.row(align=True)
+        row.operator(CreatePanel.bl_idname, text="", icon="SNAP_FACE")
+        row.separator()
         row.operator(SwitchXY.bl_idname, text="", icon="UV_SYNC_SELECT")
         row.operator_menu_enum(Preset.bl_idname, text=Preset.get_text(context), property="preset")
 
@@ -61,6 +65,11 @@ class PRINTINGHELPER_PT_panel(bpy.types.Panel):
 
             column.separator()
             column.row(align=True).prop(ph, "mode", expand=True)
+
+            sp = column.split(factor=0.4, align=True)
+            sp.alignment = "LEFT"
+            sp.separator()
+            sp.label(text=f"{bpy.app.translations.pgettext_iface('Out DPI')}:{round(render.ppm_factor)}")
 
 
 def register():
