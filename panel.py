@@ -11,9 +11,9 @@ def as_float_32(f):
 
 
 class PRINTINGHELPER_PT_panel(bpy.types.Panel):
-    bl_label = "Pringing Helper"
-    bl_space_type = 'PROPERTIES'
-    bl_region_type = 'WINDOW'
+    bl_label = "Printing  Helper"
+    bl_space_type = "PROPERTIES"
+    bl_region_type = "WINDOW"
     bl_context = "output"
 
     bl_parent_id = "RENDER_PT_format"
@@ -22,7 +22,6 @@ class PRINTINGHELPER_PT_panel(bpy.types.Panel):
         row = self.layout.row(align=True)
         row.operator(SwitchXY.bl_idname, text="", icon="UV_SYNC_SELECT")
         row.operator_menu_enum(Preset.bl_idname, text=Preset.get_text(context), property="preset")
-        # RENDER_PT_printing_helper_presets.draw_panel_header(row)
 
     def draw(self, context):
         from bpy.types import RENDER_PT_output_pixel_density
@@ -42,8 +41,9 @@ class PRINTINGHELPER_PT_panel(bpy.types.Panel):
             ops.data_path = "scene.render.ppm_base"
             ops.value = 0.0254
             col = column.column(align=True)
-            col.label(text="PPM 基数未设置为英寸单位,输出DPI参数将与实际参数不一至!")
-            col.label(text="需重置为英寸单位")
+            col.label(
+                text="The PPM base unit is not set to inches, the output DPI parameter will not match the actual parameter!")
+            col.label(text="Must be reset to inches!")
         else:
             column.prop(ph, "physical_x")
             column.prop(ph, "physical_y")
@@ -55,7 +55,7 @@ class PRINTINGHELPER_PT_panel(bpy.types.Panel):
             sp.alignment = "RIGHT"
             sp.label(text="Preset")
             row = sp.row(align=True)
-            for i in (72, 100, 300):
+            for i in (72, 150, 300):
                 ops = row.operator(PresetPPMValue.bl_idname, text=str(i))
                 ops.value = i
 

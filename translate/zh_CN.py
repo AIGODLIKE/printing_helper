@@ -18,4 +18,10 @@ data = {
     "Legal junior (20.3x12.7 cm)": "小号法律文件 (20.3x12.7 cm)",
     "Ledger (43.2x27.9 cm)": "账单 (43.2x27.9 cm)",
     "Tabloid (27.9x43.2 cm)": "小报纸 (27.9x43.2 cm)",
+    "The PPM base unit is not set to inches, the output DPI parameter will not match the actual parameter!": "PPM 基数未设置为英寸单位,输出DPI参数将与实际参数不一至!",
+    "Must be reset to inches!": "需重置为英寸单位!",
+    "Switch Width Height": "切换宽高",
+    "How to handle DPI and physical pixels when modifying output resolution": "修改输出分辨率时如何处理DPI及物理像素",
+    "Keep DPI fixed, modify physical dimensions": "固定DPI不变,修改物理尺寸",
+    "Keep the physical dimensions unchanged while modifying the DPI": "固定物理尺寸不变,修改DPI",
 }

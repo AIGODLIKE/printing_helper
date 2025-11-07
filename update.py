@@ -4,7 +4,7 @@ from .utils import pixels_to_cm_decimal, cm_to_pixels_decimal, calculate_dpi_dec
 
 owner = object()
 __is_updatable__ = True
-last_update = []  # 另外一个锁
+last_update_lock = []  # resolution update lock, subscribe_rna lock sync bug
 
 
 def update_lock(func, ):
@@ -21,20 +21,33 @@ def update_lock(func, ):
         return None
     return wap
 
+@update_lock
+def update_physical(direction="x"):
+    from .update import last_update_lock
+    scene = bpy.context.scene
+    ph = scene.printing_helper
+    render = scene.render
+
+    rk = f"resolution_{direction.lower()}"
+    pk = f"physical_{direction.lower()}"
+
+    new_pixels = int(cm_to_pixels_decimal(getattr(ph, pk), render.ppm_factor))
+    setattr(render, rk, new_pixels)
+    k = f"update_resolution_{direction.lower()}"
+    if k not in last_update_lock:
+        last_update_lock.append(k)
 
 @update_lock
 def update_ppm_factor():
-    print("update_ppm_factor")
     scene = bpy.context.scene
     ph = scene.printing_helper
     render = scene.render
     render.resolution_x = int(cm_to_pixels_decimal(ph.physical_x, render.ppm_factor))
     render.resolution_y = int(cm_to_pixels_decimal(ph.physical_y, render.ppm_factor))
-    global last_update
+    global last_update_lock
 
-    last_update.append("update_resolution_x")
-    last_update.append("update_resolution_y")
-    print("update_ppm_factor end")
+    last_update_lock.append("update_resolution_x")
+    last_update_lock.append("update_resolution_y")
 
 
 @update_lock
@@ -57,9 +70,9 @@ def update_resolution(direction="x", fixed_dpi=None, fixed_size=None):
 
 
 def update_resolution_x():
-    global __is_updatable__, last_update
-    if "update_resolution_x" in last_update:
-        last_update.remove("update_resolution_x")
+    global __is_updatable__, last_update_lock
+    if "update_resolution_x" in last_update_lock:
+        last_update_lock.remove("update_resolution_x")
     elif __is_updatable__:
         print("update_resolution_x")
         update_resolution("x")
@@ -67,8 +80,8 @@ def update_resolution_x():
 
 def update_resolution_y():
     global __is_updatable__
-    if "update_resolution_y" in last_update:
-        last_update.remove("update_resolution_y")
+    if "update_resolution_y" in last_update_lock:
+        last_update_lock.remove("update_resolution_y")
     elif __is_updatable__:
         print("update_resolution_y")
         update_resolution("y")

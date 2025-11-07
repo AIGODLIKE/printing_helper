@@ -6,6 +6,7 @@ import bpy
 class SwitchXY(bpy.types.Operator):
     bl_idname = "render.switch_xy"
     bl_label = "Switch XY"
+    bl_description = "Switch Width Height"
 
     def execute(self, context):
         scene = context.scene
@@ -80,7 +81,7 @@ items = (
     ("A0_84.1_118.9", "A0 (84.1x118.9 cm)", ""),
     ("A1_59.4_84.1", "A1 (59.4x84.1 cm)", ""),
     ("A2_42.0_59.4", "A2 (42.0x59.4 cm)", ""),
-    ("A3_29.7_42.0", "A3 (29.7 42.0 cm)", ""),
+    ("A3_29.7_42.0", "A3 (29.7x42.0 cm)", ""),
     ("A4_21.0_29.7", "A4 (21.0x29.7 cm)", ""),
     ("A5_14.8_21.0", "A5 (14.8x21.0 cm)", ""),
     ("A6_10.5_14.8", "A6 (10.5x14.8 cm)", ""),
@@ -108,7 +109,6 @@ class Preset(bpy.types.Operator):
 
         name, x, y = self.preset.split("_")
         ph.physical_x, ph.physical_y = Decimal(x), Decimal(y)
-        # print(self.bl_idname, self.preset)
         return {"FINISHED"}
 
     @classmethod

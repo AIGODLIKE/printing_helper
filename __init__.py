@@ -2,8 +2,8 @@ from . import register_module
 
 bl_info = {
     "name": "Printing Helper",
-    "description": "Printing Helper",
-    "author": "小萌新",
+    "description": "Set the resolution required for printing more simply",
+    "author": "ACGGIT Community(小萌新)",
     "version": (0, 1, 0),
     "blender": (4, 5, 0),
     "location": "",

@@ -1,29 +1,9 @@
 import bpy
 
-from .update import update_lock
-from .utils import cm_to_pixels_decimal
-
-
-@update_lock
-def update_physical(direction="x"):
-    from .update import last_update
-    print("update_physical", direction)
-    scene = bpy.context.scene
-    ph = scene.printing_helper
-    render = scene.render
-
-    rk = f"resolution_{direction.lower()}"
-    pk = f"physical_{direction.lower()}"
-
-    new_pixels = int(cm_to_pixels_decimal(getattr(ph, pk), render.ppm_factor))
-    setattr(render, rk, new_pixels)
-    k = f"update_resolution_{direction.lower()}"
-    if k not in last_update:
-        last_update.append(k)
+from .update import update_physical
 
 
 class PrintingHelperProperties(bpy.types.PropertyGroup):
-    """插件属性组"""
     args = {
         "min": 0.001,
         "precision": 2,
@@ -32,14 +12,11 @@ class PrintingHelperProperties(bpy.types.PropertyGroup):
     }
 
     def update_x(self, context):
-        print("update_physica_x")
         update_physical("x")
 
     def update_y(self, context):
-        print("update_physica_y")
         update_physical("y")
 
-    # 物理尺寸输入
     physical_x: bpy.props.FloatProperty(
         name="Width(CM)",
         description="Physical Width",
@@ -56,10 +33,10 @@ class PrintingHelperProperties(bpy.types.PropertyGroup):
     )
     mode: bpy.props.EnumProperty(
         name="Resolution Sync Mode",
-        description="修改输出分辨率时如何处理DPI及物理像素",
+        description="How to handle DPI and physical pixels when modifying output resolution",
         items=[
-            ("FIXED_DPI", "Fixed DPI", "固定DPI不变,修改物理尺寸"),
-            ("FIXED_SIZE", "Fixed Size", "固定物理尺寸不变,修改DPI"),
+            ("FIXED_DPI", "Fixed DPI", "Keep DPI fixed, modify physical dimensions"),
+            ("FIXED_SIZE", "Fixed Size", "Keep the physical dimensions unchanged while modifying the DPI"),
         ],
         default="FIXED_SIZE",
     )
@@ -75,7 +52,6 @@ class PrintingHelperProperties(bpy.types.PropertyGroup):
 
 def register():
     bpy.utils.register_class(PrintingHelperProperties)
-
     bpy.types.Scene.printing_helper = bpy.props.PointerProperty(type=PrintingHelperProperties)
 
 
