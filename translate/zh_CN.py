@@ -24,4 +24,7 @@ data = {
     "How to handle DPI and physical pixels when modifying output resolution": "修改输出分辨率时如何处理DPI及物理像素",
     "Keep DPI fixed, modify physical dimensions": "固定DPI不变,修改物理尺寸",
     "Keep the physical dimensions unchanged while modifying the DPI": "固定物理尺寸不变,修改DPI",
+    "Printing Helper": "打印助手",
+    "Set the resolution required for printing more simply": "更轻松地设置打印所需的分辨率",
+    "Set the resolution required for printing more simply.": "更轻松地设置打印所需的分辨率.",
 }

@@ -37,6 +37,8 @@ items = (
     ("Tabloid_27.9_43.2", "Tabloid (27.9x43.2 cm)", ""),
 
     ("", "ANSI Standard", ""),
+    ("ANSI A_21.6_27.9", "ANSI A (21.6x27.9 cm)", ""),
+    ("ANSI B_27.9_43.2", "ANSI B (27.9x43.2 cm)", ""),
     ("ANSI C_43.2_55.9", "ANSI C (43.2x55.9 cm)", ""),
     ("ANSI D_55.9_86.4", "ANSI D (55.9x86.4 cm)", ""),
     ("ANSI E_86.4_111.8", "ANSI E (86.4x111.8 cm)", ""),

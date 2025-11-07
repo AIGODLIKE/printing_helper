@@ -11,7 +11,7 @@ def as_float_32(f):
 
 
 class PRINTINGHELPER_PT_panel(bpy.types.Panel):
-    bl_label = "Printing  Helper"
+    bl_label = "Printing Helper"
     bl_space_type = "PROPERTIES"
     bl_region_type = "WINDOW"
     bl_context = "output"
