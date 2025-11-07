@@ -22,6 +22,8 @@ Built-in international paper size standards:
 - **ANSI Standard**: ANSI A, B, C, D, E
 - **Architectural**: Arch A through Arch E3
 - **ISO Standards**: A, B, C series (A4, A3, B5, etc.)
+- 
+<img width="1095" height="275" alt="image" src="https://github.com/user-attachments/assets/f1e46e30-f478-4209-b47f-b0fa10989870" />
 
 ### 🎛️ Smart DPI Management
 - Preset common DPI values (72, 150, 300 DPI)
