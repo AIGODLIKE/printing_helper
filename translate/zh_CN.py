@@ -32,4 +32,5 @@ data = {
     "Height (CM)": "高度 (CM)",
     "Ctrl: Enter dimensions manually": "Ctrl: 手动输入尺寸",
     "Create Panel": "创建面板",
+    "Reset as Inch": "重置为英寸"
 }

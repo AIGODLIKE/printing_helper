@@ -8,5 +8,5 @@ name = "Printing Helper"
 tagline = "Set the resolution required for printing more simply"
 type = "add-on"
 version = "0.1.1"
-tags = ["Render"]
+tags = ["Render", "Camera"]
 
