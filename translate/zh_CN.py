@@ -10,6 +10,7 @@ data = {
     "A Series": "A系列",
     "B Series": "B系列",
     "C Series": "C系列",
+    "Z Series": "Z系列",
     "North American Standard": "北美标准",
     "ANSI Standard": "ANSI标准",
     "Architectural Standard": "建筑标准",
@@ -32,5 +33,6 @@ data = {
     "Height (CM)": "高度 (CM)",
     "Ctrl: Enter dimensions manually": "Ctrl: 手动输入尺寸",
     "Create Panel": "创建面板",
-    "Reset as Inch": "重置为英寸"
+    "Reset as Inch": "重置为英寸",
+    "Preset": "预设",
 }
